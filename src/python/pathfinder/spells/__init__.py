@@ -232,7 +232,7 @@ class AllSpells:
                     return None
 
             def get_bool(d: {}, s: str) -> bool:
-                return d[s] is '1'
+                return d[s] == '1'
 
             def get_school(d: {}) -> School:
                 try:

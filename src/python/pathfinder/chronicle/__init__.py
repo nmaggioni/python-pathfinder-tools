@@ -318,7 +318,7 @@ def gold(gp_gained: int, starting_gp=None, day_job=0, gp_spent=0, items_sold=0):
 
     def annotate(sheet: ChronicleSheet):
         sheet.texts(starting_gp=starting_gp, gp_gained=gp_gained)
-        if day_job is not 0:
+        if day_job != 0:
             sheet.text('day_job', day_job)
         else:
             sheet.strike_out('day_job')
@@ -329,11 +329,11 @@ def gold(gp_gained: int, starting_gp=None, day_job=0, gp_spent=0, items_sold=0):
         else:
             inner_gp_spent = gp_spent
             inner_items_sold = items_sold
-        if inner_gp_spent is not 0:
+        if inner_gp_spent != 0:
             sheet.text('gp_spent', inner_gp_spent)
         else:
             sheet.strike_out('gp_spent')
-        if inner_items_sold is not 0:
+        if inner_items_sold != 0:
             sheet.text('items_sold', inner_items_sold)
         else:
             sheet.strike_out('items_sold')
@@ -384,7 +384,7 @@ def prestige(prestige_gained, initial_prestige=None, initial_fame=None, prestige
                         prestige_gained=prestige_gained,
                         current_fame=initial_fame + prestige_gained,
                         current_prestige=initial_prestige + prestige_gained - prestige_spent)
-            if prestige_spent is not 0:
+            if prestige_spent != 0:
                 sheet.texts(prestige_spent=prestige_spent)
             else:
                 sheet.strike_out('prestige_spent')
@@ -425,12 +425,12 @@ def annotate_chronicle_sheet(input_filename: str, output_filename: str, season: 
         if input.isEncrypted:
             input.decrypt('')
 
-        if page_number is 0:
+        if page_number == 0:
             # No page number specified, use the last page in the PDF
             page_number = input.getNumPages()
         page = input.getPage(page_number - 1)
         # Try to find the scenario number, and therefore the season to use
-        if season is 0:
+        if season == 0:
             print(input.getDocumentInfo())
             title = input.getDocumentInfo()['/Title']
             m = re.search(r'(\d\d)(\d\d)', title)

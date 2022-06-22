@@ -750,7 +750,7 @@ class MartialFlex:
                 name = feat.name
                 if feat.teamwork:
                     name = f'{name} (t)'
-                if feat.prerequisites is '':
+                if feat.prerequisites == '':
                     lines = f'{name}\n{feat.wrapped_fulltext()}'.split('\n')
                 else:
                     lines = f'{name} <- {requirement_names} : requires {feat.prerequisites}\n{feat.wrapped_fulltext()}'.split(
@@ -772,7 +772,7 @@ class MartialFlex:
                 name = feat.name
                 if feat.teamwork:
                     name = f'{name} (t)'
-                if feat.prerequisites is '':
+                if feat.prerequisites == '':
                     lines = f'**{name}**\n\n*{feat.fulltext}*'.split('\n')
                 else:
                     lines = f'**{name}**: requires {feat.prerequisites}\n\n*{feat.fulltext}*'.split(

@@ -16,7 +16,7 @@ To run from github directly do:
 ```
 > git checkout https://github.com/tomoinn/python-pathfinder-tools.git
 > cd python-pathfinder-tools/src/python
-> python3 setup.py install
+> pip install .
 ```
 
 Alternatively install with `pip3 install python-pathfinder-tools`
