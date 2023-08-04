@@ -1,9 +1,9 @@
-FROM python:3.9
+FROM python:3.10
 
 WORKDIR /src
 
 COPY . .
 
-RUN pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 -f https://download.pytorch.org/whl/torch_stable.html && cd src/python && pip install .
+RUN pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html && cd src/python && pip install .
 
 WORKDIR /docs
