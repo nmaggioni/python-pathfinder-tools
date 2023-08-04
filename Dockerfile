@@ -1,5 +1,7 @@
 FROM python:3.10
 
+RUN mkdir /.pathfinder && chmod a+rw /.pathfinder
+
 WORKDIR /src
 
 COPY . .
