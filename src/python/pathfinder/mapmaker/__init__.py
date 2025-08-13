@@ -9,9 +9,9 @@ from os.path import dirname, basename, abspath
 from pathlib import Path
 from typing import Literal
 
-import PyPDF2 as pdf
+import pypdf as pdf
 from PIL import Image, ImageEnhance
-from PyPDF2.generic import IndirectObject
+from pypdf.generic import IndirectObject
 from fpdf import FPDF
 from guizero import App, Picture
 
@@ -512,7 +512,7 @@ def extract_images_from_pdf(pdf_filename: str, page=None, to_page=None, min_widt
         if vobj['/Filter'] == '/FlateDecode':
             # A raw bitmap
             try:
-                buf = vobj.getData()
+                buf = vobj.get_data()
                 # Notice that we need metadata from the object
                 # so that we can make sense of the image data
                 size = int(vobj['/Width']), int(vobj['/Height'])
@@ -546,7 +546,7 @@ def extract_images_from_pdf(pdf_filename: str, page=None, to_page=None, min_widt
         r = pdf_page['/Resources']
         if '/XObject' in r:
             for k, v in r['/XObject'].items():
-                vobj = v.getObject()
+                vobj = v.get_object()
                 if vobj['/Subtype'] not in ['/Image'] or '/Filter' not in vobj:
                     # Reject things that aren't images but recurse into groups
                     if '/Resources' in vobj:
@@ -566,14 +566,14 @@ def extract_images_from_pdf(pdf_filename: str, page=None, to_page=None, min_widt
                         yield img
 
     # Read in the PDF file
-    in_pdf = pdf.PdfFileReader(pdf_filename)
+    in_pdf = pdf.PdfReader(pdf_filename)
     # Bug sometimes in PDFs with spaces in their filename (meh, whatever..)
-    if in_pdf.isEncrypted:
+    if in_pdf.is_encrypted:
         in_pdf.decrypt('')
     # Iterate over target page range, and over images in each page
     for page_number in range(max(0, page or 0),
-                             min(to_page or in_pdf.getNumPages(), in_pdf.getNumPages())):
-        for image in images_in_page(in_pdf.getPage(page_number)):
+                             min(to_page or in_pdf.get_num_pages(), in_pdf.get_num_pages())):
+        for image in images_in_page(in_pdf.get_page(page_number)):
             width, height = image.size
             if width >= min_width and height >= min_height and image.mode[:3] == 'RGB':
                 yield image

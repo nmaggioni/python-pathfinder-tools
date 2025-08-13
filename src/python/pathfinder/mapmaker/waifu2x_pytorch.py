@@ -16,13 +16,13 @@ class Waifu2x:
     """
 
     @staticmethod
-    def tensor_to_image(tensor, nrow=8, padding=2, normalize=False, range=None,
+    def tensor_to_image(tensor, nrow=8, padding=2, normalize=False, value_range=None,
                         scale_each=False, pad_value=0):
         """
         Get a PIL Image from the supplied tensor
         """
         grid = make_grid(tensor, nrow=nrow, padding=padding, pad_value=pad_value,
-                         normalize=normalize, range=range, scale_each=scale_each)
+                         normalize=normalize, value_range=value_range, scale_each=scale_each)
         # Add 0.5 after unnormalizing to [0, 255] to round to nearest integer
         ndarr = grid.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to('cpu', torch.uint8).numpy()
         return Image.fromarray(ndarr)
@@ -55,6 +55,8 @@ class Waifu2x:
             self.model = self.model.float()
         # Create an image splitter, use this to process the source image in tiles
         self.img_splitter = ImageSplitter(seg_size=64, scale_factor=2, boarder_pad_size=3)
+
+        #self.model = torch.compile(self.model)
 
     def scale(self, image: Image) -> Image:
         """

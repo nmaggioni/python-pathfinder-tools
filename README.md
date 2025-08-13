@@ -15,20 +15,21 @@
 
 ## Running with Docker
 
-1. Build the image: `docker build -t python-pathfinder-tools .`
-   + This will take a couple of minutes as PyTorch is downloaded. Depending on your Docker CLI version you may not be able to see the exact progress of this operation.
+1. Pull the prebuilt image or build it locally.
+   + **Prebuilt:** `docker pull ghcr.io/nmaggioni/python-pathfinder-tools:latest`
+   + Local build: `docker build -t python-pathfinder-tools .`
 2. Run the tools documented in the next section through the Docker wrapper: `./docker_run.sh <SCRIPT_NAME> <ARG1> <ARG2>`
-   + Example: `./docker_run.sh pfs_extract myscenario.pdf extracted_images`
+   + Example: `./docker_run.sh pfs_extract myscenario.pdf ./extracted_images`
 
 ## Usage
 
 ### 1. Extracting images
 
 ```bash
-./docker_run.sh pfs_extract <PATH_TO_PDF_SCENARIO> /tmp/pfs_extracted
+/path/to/repo/docker_run.sh pfs_extract <PATH_TO_PDF_SCENARIO> ./extracted
 ```
 
-Open `/tmp/pfs_extracted` in your file manager and delete/move all the images that aren't maps.
+Open `/docs/pfs_extracted` in your file manager and delete/move all the images that aren't maps.
 
 ### 2. Renaming maps
 
@@ -39,23 +40,23 @@ You have two ways of doing so: manually counting the squares - and using your fa
 To use the automated method run the following command and, once the image is displayed, click the top-left corner of three diagonally adjacent squares, starting from the topmost one.
 
 ```bash
-./docker_run.sh pfs_grid <PATH_TO_PDF_SCENARIO> /tmp/pfs_gridded
+/path/to/repo/docker_run.sh pfs_grid ./extracted ./gridded
 ```
 
 ### 3a. Upscaling maps for VTTs
 
 ```bash
-./docker_run.sh pfs_build_maps -x roll20 /tmp/pfs_gridded /tmp/pfs_upscaled
+/path/to/repo/docker_run.sh pfs_build_maps -x roll20 ./gridded ./upscaled
 ```
 
-If you chose to use the manual resizing method in the step above, remember to specify the proper directory in place of `/tmp/pfs_gridded`.
+If you chose to use the manual resizing method in the step above, remember to specify the proper directory in place of `./gridded`.
 
 ### 3b. Upscaling maps for printing
 
 This is the preset I use to print out maps on A3 sheets that will need to be cut and glued together:
 
 ```bash
-./docker_run.sh pfs_build_maps -p 10 -o 10 -a A3 -m tiled /tmp/pfs_gridded /tmp/pfs_postered
+/path/to/repo/docker_run.sh pfs_build_maps -p 10 -o 10 -a A3 -m tiled ./gridded ./postered
 ```
 
 When printing the resulting PDF remember to avoid having the printer rescale the content in any way: margins and scale are already built into the document and should only be changed through the `pfs_build_maps` options themselves.

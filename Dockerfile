@@ -1,11 +1,15 @@
-FROM python:3.10
+FROM python:3.13.6-trixie
 
 RUN mkdir /.pathfinder && chmod a+rw /.pathfinder
 
 WORKDIR /src
 
+RUN pip install torch==2.8.0+cpu torchvision==0.23.0+cpu --index-url https://download.pytorch.org/whl/cpu
+
 COPY . .
 
-RUN pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 -f https://download.pytorch.org/whl/torch_stable.html && cd src/python && pip install .
+WORKDIR /src/src/python
+
+RUN pip install .
 
 WORKDIR /docs
