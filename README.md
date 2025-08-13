@@ -1,9 +1,8 @@
 # python-pathfinder-tools
 
 > A set of utilities to do things related to the Pathfinder tabletop role playing game.
-> 
-> Note that CUDA GPU acceleration is only available for Nvidia GPUs and map upscaling can be very slow in some environments.
 
+> Note that this fork **only uses the CPU** for upscaling and enhancing, not the GPU.
 > Refer to [the original README](https://github.com/tomoinn/python-pathfinder-tools/blob/master/README.md) for all the detailed informations and instructions that are not reported here for brevity.
 
 - [Running with Docker](#running-with-docker)
